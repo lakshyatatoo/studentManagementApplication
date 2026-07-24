@@ -49,60 +49,6 @@ A full MERN stack application for managing student course registrations with rol
 │   └── vite.config.js      # Dev proxy config
 ```
 
-## Getting Started
-
-### Prerequisites
-- Node.js 18+
-- MongoDB (local or Atlas)
-
-### Installation
-
-```bash
-# Clone the repo
-git clone <repo-url>
-cd studentmanagementAppTs
-
-# Install backend dependencies
-cd server
-npm install
-
-# Install frontend dependencies
-cd ../client
-npm install
-```
-
-### Configuration
-
-Edit `server/.env`:
-
-```
-MONGODB_URI=mongodb+srv://<user>:<password>@<cluster>.mongodb.net/studentManagementApplication
-JWT_SECRET=your_jwt_secret_key
-JWT_EXPIRE=7d
-PORT=5001
-```
-
-### Run the App
-
-```bash
-# Terminal 1 - Backend
-cd server
-npm run dev
-
-# Terminal 2 - Frontend
-cd client
-npm run dev
-```
-
-- **Frontend:** http://localhost:3000
-- **Backend API:** http://localhost:5001/api
-
-### Seed Data
-
-On first run, the server auto-seeds:
-- **Admin user:** `admin@studentapp.com` / `Admin@123`
-- **5 courses:** CS101, CS201, CS202, CS301, CS401
-
 ## API Endpoints
 
 | Method | Endpoint | Auth | Description |
