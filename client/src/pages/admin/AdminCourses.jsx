@@ -75,16 +75,17 @@ const AdminCourses = () => {
 
   if (loading) {
     return (
-      <div className="d-flex justify-content-center">
-        <div className="spinner-border text-primary" role="status"></div>
+      <div className="loading-container">
+        <div className="spinner-border" role="status"></div>
+        <span className="loading-text">Loading courses...</span>
       </div>
     );
   }
 
   return (
     <div>
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2>Manage Courses</h2>
+      <div className="section-header">
+        <h2 className="page-title">Manage Courses</h2>
         <button
           className="btn btn-primary"
           onClick={() => {
@@ -92,99 +93,112 @@ const AdminCourses = () => {
             setShowForm(!showForm);
           }}
         >
-          {showForm ? 'Cancel' : '+ Add Course'}
+          {showForm ? '✕ Cancel' : '+ Add Course'}
         </button>
       </div>
 
       {message && <Alert message={message} type="success" />}
 
       {showForm && (
-        <div className="card mb-4">
+        <div className="card course-form-card mb-4">
           <div className="card-body">
-            <h5>{editId ? 'Edit Course' : 'Add New Course'}</h5>
+            <h5 style={{ fontWeight: 700, color: 'var(--dark)' }}>{editId ? 'Edit Course' : 'Add New Course'}</h5>
             <form onSubmit={handleSubmit}>
-              <div className="row">
-                <div className="col-md-4 mb-3">
+              <div className="row g-3">
+                <div className="col-md-4">
                   <label className="form-label">Course Code</label>
                   <input
                     type="text"
                     className="form-control"
+                    placeholder="e.g. CS101"
                     value={formData.courseCode}
-                    onChange={(e) => setFormData({ ...formData, courseCode: e.target.value })}
+                    onChange={(e) => setFormData({ ...formData, courseCode: e.target.value.toUpperCase() })}
                     required
                   />
                 </div>
-                <div className="col-md-4 mb-3">
+                <div className="col-md-4">
                   <label className="form-label">Name</label>
                   <input
                     type="text"
                     className="form-control"
+                    placeholder="Course name"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     required
                   />
                 </div>
-                <div className="col-md-4 mb-3">
+                <div className="col-md-4">
                   <label className="form-label">Description</label>
                   <input
                     type="text"
                     className="form-control"
+                    placeholder="Brief description"
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   />
                 </div>
               </div>
-              <button type="submit" className="btn btn-success me-2">
-                {editId ? 'Update' : 'Create'}
-              </button>
-              <button type="button" className="btn btn-secondary" onClick={resetForm}>
-                Cancel
-              </button>
+              <div className="mt-3 d-flex gap-2">
+                <button type="submit" className="btn btn-success">
+                  {editId ? 'Update' : 'Create'}
+                </button>
+                <button type="button" className="btn btn-secondary" onClick={resetForm}>
+                  Cancel
+                </button>
+              </div>
             </form>
           </div>
         </div>
       )}
 
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>Code</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {courses.map((course) => (
-            <tr key={course._id}>
-              <td>{course.courseCode}</td>
-              <td>{course.name}</td>
-              <td>{course.description}</td>
-              <td>
-                <button
-                  className="btn btn-warning btn-sm me-2"
-                  onClick={() => handleEdit(course)}
-                >
-                  Edit
-                </button>
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => handleDelete(course._id)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-          {courses.length === 0 && (
-            <tr>
-              <td colSpan="4" className="text-center text-muted">
-                No courses found.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+      <div className="card">
+        <div className="card-body p-0">
+          <div className="table-responsive">
+            <table className="table mb-0">
+              <thead>
+                <tr>
+                  <th>Code</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {courses.map((course) => (
+                  <tr key={course._id}>
+                    <td><span className="course-code-badge">{course.courseCode}</span></td>
+                    <td><strong>{course.name}</strong></td>
+                    <td>{course.description}</td>
+                    <td>
+                      <div className="action-btn-group">
+                        <button
+                          className="btn btn-warning btn-sm"
+                          onClick={() => handleEdit(course)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="btn btn-danger btn-sm"
+                          onClick={() => handleDelete(course._id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+                {courses.length === 0 && (
+                  <tr>
+                    <td colSpan="4" className="text-center text-muted py-4">
+                      No courses found. Click "Add Course" to create one.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

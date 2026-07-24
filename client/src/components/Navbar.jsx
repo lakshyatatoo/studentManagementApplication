@@ -11,10 +11,10 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav className="navbar navbar-expand-lg">
       <div className="container">
         <Link className="navbar-brand" to="/">
-          Student Management
+          StudHub
         </Link>
         <button
           className="navbar-toggler"
@@ -68,11 +68,11 @@ const Navbar = () => {
             )}
           </ul>
 
-          <ul className="navbar-nav ms-auto">
+          <ul className="navbar-nav ms-auto align-items-center">
             {user ? (
               <>
                 <li className="nav-item">
-                  <span className="navbar-text text-white me-3">{user.email}</span>
+                  <span className="navbar-text me-3">{user.email}</span>
                 </li>
                 <li className="nav-item">
                   <button className="btn btn-light btn-sm" onClick={handleLogout}>

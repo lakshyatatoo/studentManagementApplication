@@ -44,31 +44,34 @@ const Courses = () => {
 
   if (loading) {
     return (
-      <div className="d-flex justify-content-center">
-        <div className="spinner-border text-primary" role="status"></div>
+      <div className="loading-container">
+        <div className="spinner-border" role="status"></div>
+        <span className="loading-text">Loading courses...</span>
       </div>
     );
   }
 
   return (
-    <div>
-      <h2 className="mb-4">Course Catalog</h2>
+    <div className="container py-4">
+      <div className="section-header">
+        <h2 className="page-title">Course Catalog</h2>
+      </div>
       {message && <Alert message={message} type="success" />}
-      <div className="row">
+      <div className="row g-4">
         {courses.map((course) => (
-          <div key={course._id} className="col-md-6 col-lg-4 mb-4">
-            <div className="card h-100">
+          <div key={course._id} className="col-md-6 col-lg-4">
+            <div className="card course-card h-100">
               <div className="card-body d-flex flex-column">
-                <h5 className="card-title">{course.name}</h5>
-                <h6 className="card-subtitle mb-2 text-muted">{course.courseCode}</h6>
-                <p className="card-text flex-grow-1">{course.description}</p>
+                <span className="course-code-badge">{course.courseCode}</span>
+                <h5 className="course-title">{course.name}</h5>
+                <p className="course-desc">{course.description}</p>
                 {user && user.role === 'Student' && (
                   <button
                     className={`btn ${enrolledIds.includes(course._id) ? 'btn-success' : 'btn-primary'}`}
                     disabled={enrolledIds.includes(course._id)}
                     onClick={() => handleEnroll(course._id)}
                   >
-                    {enrolledIds.includes(course._id) ? 'Enrolled' : 'Enroll'}
+                    {enrolledIds.includes(course._id) ? '✓ Enrolled' : 'Enroll'}
                   </button>
                 )}
               </div>
@@ -76,7 +79,9 @@ const Courses = () => {
           </div>
         ))}
         {courses.length === 0 && (
-          <p className="text-muted">No courses available.</p>
+          <div className="empty-state">
+            <p>No courses available yet.</p>
+          </div>
         )}
       </div>
     </div>

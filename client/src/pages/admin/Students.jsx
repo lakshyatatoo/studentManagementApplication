@@ -38,58 +38,69 @@ const Students = () => {
 
   if (loading) {
     return (
-      <div className="d-flex justify-content-center">
-        <div className="spinner-border text-primary" role="status"></div>
+      <div className="loading-container">
+        <div className="spinner-border" role="status"></div>
+        <span className="loading-text">Loading students...</span>
       </div>
     );
   }
 
   return (
     <div>
-      <h2 className="mb-4">Manage Students</h2>
+      <div className="section-header">
+        <h2 className="page-title">Manage Students</h2>
+      </div>
       {message && <Alert message={message} type="success" />}
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>Full Name</th>
-            <th>Email</th>
-            <th>Address</th>
-            <th>Registered On</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {students.map((student) => (
-            <tr key={student._id}>
-              <td>{student.fullName}</td>
-              <td>{student.email}</td>
-              <td>{student.address || '-'}</td>
-              <td>{new Date(student.registeredOn).toLocaleDateString()}</td>
-              <td>
-                <Link to={`/admin/students/${student._id}`} className="btn btn-info btn-sm me-2">
-                  Details
-                </Link>
-                <Link to={`/admin/students/${student._id}/edit`} className="btn btn-warning btn-sm me-2">
-                  Edit
-                </Link>
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => handleDelete(student._id)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-          {students.length === 0 && (
-            <tr>
-              <td colSpan="5" className="text-center text-muted">
-                No students found.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+      <div className="card">
+        <div className="card-body p-0">
+          <div className="table-responsive">
+            <table className="table mb-0">
+              <thead>
+                <tr>
+                  <th>Full Name</th>
+                  <th>Email</th>
+                  <th>Address</th>
+                  <th>Registered</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {students.map((student) => (
+                  <tr key={student._id}>
+                    <td><strong>{student.fullName}</strong></td>
+                    <td>{student.email}</td>
+                    <td>{student.address || <span style={{ color: 'var(--gray-400)' }}>—</span>}</td>
+                    <td>{new Date(student.registeredOn).toLocaleDateString()}</td>
+                    <td>
+                      <div className="action-btn-group">
+                        <Link to={`/admin/students/${student._id}`} className="btn btn-info btn-sm">
+                          Details
+                        </Link>
+                        <Link to={`/admin/students/${student._id}/edit`} className="btn btn-warning btn-sm">
+                          Edit
+                        </Link>
+                        <button
+                          className="btn btn-danger btn-sm"
+                          onClick={() => handleDelete(student._id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+                {students.length === 0 && (
+                  <tr>
+                    <td colSpan="5" className="text-center text-muted py-4">
+                      No students found.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

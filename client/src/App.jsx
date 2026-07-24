@@ -13,14 +13,15 @@ import StudentDetails from './pages/admin/StudentDetails';
 import EditStudent from './pages/admin/EditStudent';
 import AdminCourses from './pages/admin/AdminCourses';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.css';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="min-vh-100 bg-light">
+        <div className="min-vh-100 d-flex flex-column">
           <Navbar />
-          <main className="container my-4">
+          <main className="flex-grow-1">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
@@ -31,7 +32,7 @@ function App() {
                 path="/profile"
                 element={
                   <ProtectedRoute role="Student">
-                    <Profile />
+                    <div className="container py-4"><Profile /></div>
                   </ProtectedRoute>
                 }
               />
@@ -40,7 +41,7 @@ function App() {
                 path="/my-courses"
                 element={
                   <ProtectedRoute role="Student">
-                    <MyCourses />
+                    <div className="container py-4"><MyCourses /></div>
                   </ProtectedRoute>
                 }
               />
@@ -49,7 +50,7 @@ function App() {
                 path="/admin/students"
                 element={
                   <ProtectedRoute role="Admin">
-                    <Students />
+                    <div className="container py-4"><Students /></div>
                   </ProtectedRoute>
                 }
               />
@@ -58,7 +59,7 @@ function App() {
                 path="/admin/students/:id"
                 element={
                   <ProtectedRoute role="Admin">
-                    <StudentDetails />
+                    <div className="container py-4"><StudentDetails /></div>
                   </ProtectedRoute>
                 }
               />
@@ -67,7 +68,7 @@ function App() {
                 path="/admin/students/:id/edit"
                 element={
                   <ProtectedRoute role="Admin">
-                    <EditStudent />
+                    <div className="container py-4"><EditStudent /></div>
                   </ProtectedRoute>
                 }
               />
@@ -76,7 +77,7 @@ function App() {
                 path="/admin/courses"
                 element={
                   <ProtectedRoute role="Admin">
-                    <AdminCourses />
+                    <div className="container py-4"><AdminCourses /></div>
                   </ProtectedRoute>
                 }
               />

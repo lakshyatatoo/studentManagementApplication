@@ -37,18 +37,19 @@ const EditStudent = () => {
 
   if (loading) {
     return (
-      <div className="d-flex justify-content-center">
-        <div className="spinner-border text-primary" role="status"></div>
+      <div className="loading-container">
+        <div className="spinner-border" role="status"></div>
+        <span className="loading-text">Loading student...</span>
       </div>
     );
   }
 
   return (
     <div className="row justify-content-center">
-      <div className="col-md-6">
+      <div className="col-md-6 col-lg-5">
         <div className="card">
           <div className="card-body">
-            <h3>Edit Student</h3>
+            <h3 className="page-title mb-4" style={{ fontSize: '1.3rem' }}>Edit Student</h3>
             {error && <Alert message={error} type="danger" />}
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
@@ -61,7 +62,7 @@ const EditStudent = () => {
                   required
                 />
               </div>
-              <div className="mb-3">
+              <div className="mb-4">
                 <label className="form-label">Address</label>
                 <input
                   type="text"
@@ -70,12 +71,14 @@ const EditStudent = () => {
                   onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                 />
               </div>
-              <button type="submit" className="btn btn-primary me-2">
-                Save Changes
-              </button>
-              <Link to="/admin/students" className="btn btn-secondary">
-                Cancel
-              </Link>
+              <div className="d-flex gap-2">
+                <button type="submit" className="btn btn-primary flex-grow-1">
+                  Save Changes
+                </button>
+                <Link to="/admin/students" className="btn btn-secondary">
+                  Cancel
+                </Link>
+              </div>
             </form>
           </div>
         </div>

@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import API from '../services/api';
-import { useAuth } from '../context/AuthContext';
 import Alert from '../components/Alert';
 
 const MyCourses = () => {
@@ -57,63 +55,74 @@ const MyCourses = () => {
 
   if (loading) {
     return (
-      <div className="d-flex justify-content-center">
-        <div className="spinner-border text-primary" role="status"></div>
+      <div className="loading-container">
+        <div className="spinner-border" role="status"></div>
+        <span className="loading-text">Loading courses...</span>
       </div>
     );
   }
 
   return (
     <div>
-      <h2 className="mb-4">My Courses</h2>
+      <div className="section-header">
+        <h2 className="page-title">My Courses</h2>
+      </div>
       {message && <Alert message={message} type="success" />}
 
-      <h4 className="mb-3">Enrolled Courses</h4>
-      {enrolledCourses.length === 0 ? (
-        <p className="text-muted mb-4">You haven't enrolled in any courses yet.</p>
-      ) : (
-        <table className="table table-striped mb-5">
-          <thead>
-            <tr>
-              <th>Code</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Enrolled On</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {enrolledCourses.map((ec) => (
-              <tr key={ec._id}>
-                <td>{ec.course?.courseCode}</td>
-                <td>{ec.course?.name}</td>
-                <td>{ec.course?.description}</td>
-                <td>{new Date(ec.registeredOn).toLocaleDateString()}</td>
-                <td>
-                  <button
-                    className="btn btn-danger btn-sm"
-                    onClick={() => handleDrop(ec.course?._id)}
-                  >
-                    Drop
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+      <div className="card mb-5">
+        <div className="card-body">
+          <h4 className="mb-3" style={{ fontWeight: 700, color: 'var(--dark)' }}>Enrolled Courses</h4>
+          {enrolledCourses.length === 0 ? (
+            <div className="empty-state">
+              <p>You haven't enrolled in any courses yet.</p>
+            </div>
+          ) : (
+            <div className="table-responsive">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Enrolled On</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {enrolledCourses.map((ec) => (
+                    <tr key={ec._id}>
+                      <td><span className="course-code-badge">{ec.course?.courseCode}</span></td>
+                      <td>{ec.course?.name}</td>
+                      <td>{ec.course?.description}</td>
+                      <td>{new Date(ec.registeredOn).toLocaleDateString()}</td>
+                      <td>
+                        <button
+                          className="btn btn-danger btn-sm"
+                          onClick={() => handleDrop(ec.course?._id)}
+                        >
+                          Drop
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      </div>
 
-      <h4 className="mb-3">Available Courses</h4>
-      <div className="row">
+      <h4 className="mb-3" style={{ fontWeight: 700, color: 'var(--dark)' }}>Available Courses</h4>
+      <div className="row g-4">
         {allCourses
           .filter((c) => !enrolledIds.includes(c._id))
           .map((course) => (
-            <div key={course._id} className="col-md-6 col-lg-4 mb-4">
-              <div className="card h-100">
+            <div key={course._id} className="col-md-6 col-lg-4">
+              <div className="card course-card h-100">
                 <div className="card-body d-flex flex-column">
-                  <h5 className="card-title">{course.name}</h5>
-                  <h6 className="card-subtitle mb-2 text-muted">{course.courseCode}</h6>
-                  <p className="card-text flex-grow-1">{course.description}</p>
+                  <span className="course-code-badge">{course.courseCode}</span>
+                  <h5 className="course-title">{course.name}</h5>
+                  <p className="course-desc">{course.description}</p>
                   <button
                     className="btn btn-primary"
                     onClick={() => handleEnroll(course._id)}
@@ -124,6 +133,11 @@ const MyCourses = () => {
               </div>
             </div>
           ))}
+        {allCourses.filter((c) => !enrolledIds.includes(c._id)).length === 0 && (
+          <div className="empty-state">
+            <p>You're enrolled in all available courses!</p>
+          </div>
+        )}
       </div>
     </div>
   );

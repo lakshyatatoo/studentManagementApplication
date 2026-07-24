@@ -53,19 +53,21 @@ const Profile = () => {
 
   if (loading) {
     return (
-      <div className="d-flex justify-content-center">
-        <div className="spinner-border text-primary" role="status"></div>
+      <div className="loading-container">
+        <div className="spinner-border" role="status"></div>
+        <span className="loading-text">Loading profile...</span>
       </div>
     );
   }
 
   return (
-    <div className="row">
-      <div className="col-md-6">
+    <div className="row g-4">
+      {message && <div className="col-12"><Alert message={message} type="success" /></div>}
+
+      <div className="col-lg-5">
         <div className="card">
           <div className="card-body">
-            <h3>My Profile</h3>
-            {message && <Alert message={message} type="success" />}
+            <h3 className="page-title mb-4" style={{ fontSize: '1.3rem' }}>My Profile</h3>
             <form onSubmit={handleUpdate}>
               <div className="mb-3">
                 <label className="form-label">Email</label>
@@ -93,7 +95,7 @@ const Profile = () => {
                   onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                 />
               </div>
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className="btn btn-primary w-100">
                 Update Profile
               </button>
             </form>
@@ -101,40 +103,44 @@ const Profile = () => {
         </div>
       </div>
 
-      <div className="col-md-6">
+      <div className="col-lg-7">
         <div className="card">
           <div className="card-body">
-            <h3>My Enrolled Courses</h3>
+            <h3 className="page-title mb-4" style={{ fontSize: '1.3rem' }}>My Enrolled Courses</h3>
             {enrolledCourses.length === 0 ? (
-              <p className="text-muted">No courses enrolled yet.</p>
+              <div className="empty-state">
+                <p>No courses enrolled yet.</p>
+              </div>
             ) : (
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Code</th>
-                    <th>Name</th>
-                    <th>Enrolled On</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {enrolledCourses.map((ec) => (
-                    <tr key={ec._id}>
-                      <td>{ec.course?.courseCode}</td>
-                      <td>{ec.course?.name}</td>
-                      <td>{new Date(ec.registeredOn).toLocaleDateString()}</td>
-                      <td>
-                        <button
-                          className="btn btn-danger btn-sm"
-                          onClick={() => handleDrop(ec.course?._id)}
-                        >
-                          Drop
-                        </button>
-                      </td>
+              <div className="table-responsive">
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th>Code</th>
+                      <th>Name</th>
+                      <th>Enrolled On</th>
+                      <th>Action</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {enrolledCourses.map((ec) => (
+                      <tr key={ec._id}>
+                        <td><span className="course-code-badge">{ec.course?.courseCode}</span></td>
+                        <td>{ec.course?.name}</td>
+                        <td>{new Date(ec.registeredOn).toLocaleDateString()}</td>
+                        <td>
+                          <button
+                            className="btn btn-danger btn-sm"
+                            onClick={() => handleDrop(ec.course?._id)}
+                          >
+                            Drop
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             )}
           </div>
         </div>
