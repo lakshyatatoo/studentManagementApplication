@@ -10,5 +10,16 @@ namespace StudentRegistrationWebApp.Controllers
         {
             return View();
         }
+
+        [AllowAnonymous]
+        public IActionResult Error(int? statusCode = null)
+        {
+            if (statusCode.HasValue)
+            {
+                ViewData["StatusCode"] = statusCode.Value;
+                Response.StatusCode = statusCode.Value;
+            }
+            return View();
+        }
     }
 }

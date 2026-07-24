@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using StudentRegistrationWebApp.Models;
 
 namespace StudentRegistrationWebApp.Data
@@ -37,6 +38,8 @@ namespace StudentRegistrationWebApp.Data
             }
 
             var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
+            context.Database.Migrate();
+
             if (!context.Courses.Any())
             {
                 context.Courses.AddRange(

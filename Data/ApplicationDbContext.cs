@@ -19,7 +19,7 @@ namespace StudentRegistrationWebApp.Data
             base.OnModelCreating(builder);
 
             builder.Entity<CourseRegistration>()
-                .HasIndex(cr => cr.StudentId)
+                .HasIndex(cr => new { cr.StudentId, cr.CourseId })
                 .IsUnique();
         }
     }

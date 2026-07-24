@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using StudentRegistrationWebApp.Data;
 using StudentRegistrationWebApp.Models;
 
@@ -22,6 +23,16 @@ namespace StudentRegistrationWebApp.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null) return NotFound();
+
+            var registrations = await (
+                from cr in _context.CourseRegistrations
+                join c in _context.Courses on cr.CourseId equals c.Id
+                where cr.StudentId == user.Id
+                select new { cr.Id, cr.RegisteredOn, c.CourseCode, c.Name, c.Description }
+            ).ToListAsync();
+
+            ViewBag.Registrations = registrations;
+            ViewData["Registrations"] = registrations;
             return View(user);
         }
 

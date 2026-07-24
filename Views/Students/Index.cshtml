@@ -18,6 +18,7 @@ else
                     <th>Full Name</th>
                     <th>Email</th>
                     <th>Registered On</th>
+                    <th class="text-end">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,6 +28,11 @@ else
                         <td>@item.FullName</td>
                         <td>@item.Email</td>
                         <td>@item.RegisteredOn.ToString("MMM dd, yyyy")</td>
+                        <td class="text-end">
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Details</a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
                     </tr>
                 }
             </tbody>

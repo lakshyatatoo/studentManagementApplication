@@ -1,10 +1,11 @@
 @model IEnumerable<StudentRegistrationWebApp.Models.Course>
 @{
     ViewData["Title"] = "Register for Course";
+    var registeredIds = ViewBag.RegisteredCourseIds as List<int> ?? new List<int>();
 }
 
 <h1 class="h3 mb-3">Register for a Course</h1>
-<p class="text-muted">You can register for only one course.</p>
+<p class="text-muted">Select a course to register. You can register for multiple courses.</p>
 
 @if (!Model.Any())
 {
@@ -25,16 +26,24 @@ else
             <tbody>
                 @foreach (var item in Model)
                 {
+                    var isRegistered = registeredIds.Contains(item.Id);
                     <tr>
                         <td>@item.CourseCode</td>
                         <td>@item.Name</td>
                         <td>@item.Description</td>
                         <td class="text-end">
-                            <form asp-action="Register" method="post" style="display:inline;">
-                                <input type="hidden" name="courseId" value="@item.Id" />
-                                <button type="submit" class="btn btn-sm btn-success"
-                                        onclick="return confirm('Register for @item.Name?');">Register</button>
-                            </form>
+                            @if (isRegistered)
+                            {
+                                <span class="badge bg-success">Registered</span>
+                            }
+                            else
+                            {
+                                <form asp-action="Register" method="post" style="display:inline;">
+                                    <input type="hidden" name="courseId" value="@item.Id" />
+                                    <button type="submit" class="btn btn-sm btn-success"
+                                            onclick="return confirm('Register for @item.Name?');">Register</button>
+                                </form>
+                            }
                         </td>
                     </tr>
                 }

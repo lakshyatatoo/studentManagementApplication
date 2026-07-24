@@ -25,13 +25,12 @@ namespace StudentRegistrationWebApp.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (user == null) return NotFound();
 
-            var existingRegistration = await _context.CourseRegistrations
-                .AnyAsync(cr => cr.StudentId == user.Id);
-            if (existingRegistration)
-            {
-                TempData["Message"] = "You have already registered for a course.";
-                return RedirectToAction("Index", "Profile");
-            }
+            var registeredCourseIds = await _context.CourseRegistrations
+                .Where(cr => cr.StudentId == user.Id)
+                .Select(cr => cr.CourseId)
+                .ToListAsync();
+
+            ViewBag.RegisteredCourseIds = registeredCourseIds;
 
             var courses = await _context.Courses.ToListAsync();
             return View(courses);
@@ -44,12 +43,12 @@ namespace StudentRegistrationWebApp.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (user == null) return NotFound();
 
-            var existingRegistration = await _context.CourseRegistrations
-                .AnyAsync(cr => cr.StudentId == user.Id);
-            if (existingRegistration)
+            var alreadyRegistered = await _context.CourseRegistrations
+                .AnyAsync(cr => cr.StudentId == user.Id && cr.CourseId == courseId);
+            if (alreadyRegistered)
             {
-                TempData["Message"] = "You have already registered for a course.";
-                return RedirectToAction("Index", "Profile");
+                TempData["Message"] = "You are already registered for this course.";
+                return RedirectToAction(nameof(Register));
             }
 
             var course = await _context.Courses.FindAsync(courseId);
