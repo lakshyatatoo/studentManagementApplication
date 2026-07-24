@@ -14,7 +14,7 @@ const Navbar = () => {
     <nav className="navbar navbar-expand-lg">
       <div className="container">
         <Link className="navbar-brand" to="/">
-          StudHub
+          EduFlow
         </Link>
         <button
           className="navbar-toggler"

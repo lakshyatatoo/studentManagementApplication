@@ -18,11 +18,11 @@ app.use('/api/courses', require('./routes/courses'));
 app.use('/api/students', require('./routes/students'));
 
 app.get('/api', (req, res) => {
-  res.json({ message: 'Student Management API', endpoints: ['/api/auth', '/api/courses', '/api/students'] });
+  res.json({ message: 'EduFlow API', endpoints: ['/api/auth', '/api/courses', '/api/students'] });
 });
 
 app.get('/', (req, res) => {
-  res.json({ message: 'Student Management API is running' });
+  res.json({ message: 'EduFlow API is running' });
 });
 
 const PORT = process.env.PORT || 5000;

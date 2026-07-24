@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div className="home-page">
       <div className="container py-5" style={{ position: 'relative', zIndex: 1 }}>
-        <h1>Welcome to StudHub</h1>
+        <h1>Welcome to EduFlow</h1>
         <p className="lead">
           Manage courses, enroll students, and track academic progress — all in one place.
         </p>

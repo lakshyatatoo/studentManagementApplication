@@ -527,6 +527,7 @@ body {
   font-size: 1.15rem;
   color: var(--gray-500);
   max-width: 500px;
+  margin-inline: auto;
   margin-bottom: 2rem;
 }
 
