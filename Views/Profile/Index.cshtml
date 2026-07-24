@@ -1,0 +1,22 @@
+@model StudentRegistrationWebApp.Models.ApplicationUser
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<h1 class="h3 mb-3">My Profile</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">Full Name</dt>
+    <dd class="col-sm-9">@Model.FullName</dd>
+
+    <dt class="col-sm-3">Email</dt>
+    <dd class="col-sm-9">@Model.Email</dd>
+
+    <dt class="col-sm-3">Address</dt>
+    <dd class="col-sm-9">@(Model.Address ?? "Not specified")</dd>
+
+    <dt class="col-sm-3">Registered On</dt>
+    <dd class="col-sm-9">@Model.RegisteredOn.ToString("MMM dd, yyyy")</dd>
+</dl>
+
+<a asp-action="Edit" class="btn btn-primary">Edit Profile</a>

@@ -1,0 +1,26 @@
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1 class="h3 mb-3">Login</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Login" method="post">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input name="email" type="email" class="form-control" required />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input name="password" type="password" class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+            <a asp-action="Register" class="btn btn-secondary">Register</a>
+        </form>
+        <div class="mt-3">
+            <small class="text-muted">Admin login: admin@studentapp.com / Admin@123</small>
+        </div>
+    </div>
+</div>
